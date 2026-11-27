@@ -132,58 +132,28 @@
 
 <section id="downloads" class="section downloads">
   <h2>Downloads</h2>
-  <p>Bonus material to go with the books, free to readers. Enter your email address and the download links appear straight away.</p>
+  <p>Free bonus material to go with the books: printable practice sheets, extra reference pages and more, gathered on one page and sorted by book.</p>
+  <p>To open it, enter your email address in a short form. You can also tick a box if you would like occasional emails about new releases and bonus material. It is unticked by default.</p>
 
-  <div class="dl-item">
-    <h4>Brush Calligraphy for Beginners: Bonus Material</h4>
-    <p class="kicker">PDF &middot; 55 pages &middot; for <em>Chinese and Japanese Brush Calligraphy for Beginners</em></p>
-    <p>Further strokes and further structure rules from the 1914 manual, each with model characters, plus blank grids and tracing sheets to print for every character in the book's copybook and scroll projects.</p>
-  </div>
-
-  <!-- To add a new bonus: copy a .dl-item above and a matching <li> inside #dl-links below. -->
-
-  <form id="dl-form" class="dl-form" method="post" target="dl-frame" action="" data-endpoint="" data-email-field="email_address" data-optin-field="updates" data-optin-value="yes">
-    <label for="dl-email">Email address</label>
-    <input id="dl-email" name="email_address" type="email" required autocomplete="email" placeholder="you@example.com">
-    <label class="check">
-      <input id="dl-optin" type="checkbox">
-      <span>Also email me about new releases and bonus material from the author. I can unsubscribe at any time.</span>
-    </label>
-    <button class="btn" type="submit">Get the downloads</button>
-    <p class="fine">Your email is used to send you the downloads and, only if you tick the box, occasional updates. No spam, and it is never shared.</p>
-    <p id="dl-msg" class="fine" role="status" aria-live="polite"></p>
-  </form>
-  <iframe name="dl-frame" title="Form submission" hidden></iframe>
-
-  <div id="dl-unlocked" class="dl-unlocked" hidden>
-    <h3 class="group">Your downloads</h3>
-    <ul id="dl-links">
-      <li><a class="btn small" href="downloads/Brush_Calligraphy_for_Beginners_Bonus.pdf" download>Brush Calligraphy for Beginners: Bonus Material (PDF)</a></li>
-    </ul>
-    <p class="fine">Print at 100 per cent (actual size) on Letter or A4 paper.</p>
-  </div>
+  <p id="dl-first">
+    <a id="dl-open" class="btn" href="https://forms.gle/yKo53hTwRgAWXKhK8" target="_blank" rel="noopener">Get free downloads</a>
+  </p>
+  <p id="dl-again" hidden>
+    <a class="btn" href="bonus-downloads.html">Go to your downloads</a>
+    <a class="btn ghost" href="https://forms.gle/yKo53hTwRgAWXKhK8" target="_blank" rel="noopener">Use a different email</a>
+  </p>
+  <p class="fine">The form opens in a new tab. Your email is used only to send you the downloads link and, if you tick the box, occasional updates. It is never shared.</p>
 </section>
 
 <script>
 (function(){
-  var form=document.getElementById('dl-form'),msg=document.getElementById('dl-msg'),
-      box=document.getElementById('dl-unlocked'),KEY='qms_dl_unlocked';
-  function show(){box.hidden=false;form.hidden=true;}
-  try{if(localStorage.getItem(KEY)==='1'){show();}}catch(e){}
-  form.addEventListener('submit',function(ev){
-    var ep=form.getAttribute('data-endpoint');
-    if(!ep){ev.preventDefault();msg.textContent='Sign-up is opening shortly. Please check back soon.';return;}
-    form.action=ep;
-    var optin=document.getElementById('dl-optin').checked,
-        old=form.querySelector('input[type=hidden]');
-    if(old){old.remove();}
-    if(optin){
-      var h=document.createElement('input');h.type='hidden';
-      h.name=form.getAttribute('data-optin-field');h.value=form.getAttribute('data-optin-value');
-      form.appendChild(h);
-    }
-    msg.textContent='Thank you. Your downloads are below.';
-    setTimeout(function(){try{localStorage.setItem(KEY,'1');}catch(e){}show();},600);
+  var KEY='qms_dl_access';
+  var first=document.getElementById('dl-first'),again=document.getElementById('dl-again');
+  function showAgain(){first.hidden=true;again.hidden=false;}
+  try{if(localStorage.getItem(KEY)==='1'){showAgain();}}catch(e){}
+  document.getElementById('dl-open').addEventListener('click',function(){
+    try{localStorage.setItem(KEY,'1');}catch(e){}
+    setTimeout(showAgain,800);
   });
 })();
 </script>
